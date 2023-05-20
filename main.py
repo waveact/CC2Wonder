@@ -75,6 +75,8 @@ class CC2WonderSaveOperator(bpy.types.Operator):
         
         self.merge_shape_keys("Mouth_Pull_Upper_L", "Mouth_Up_Upper_L", "lipSneerL")
         
+        self.create_stick_shape_keys()
+        
         self.rename_shape_keys()
         self.assign_driver()
         self.rename_base_color_maps()
@@ -171,7 +173,55 @@ class CC2WonderSaveOperator(bpy.types.Operator):
                     #shape_keys.key_blocks.remove(bb_key)
     
                     new_key.value = 0.0
+
+    def create_stick_shape_keys(self):
+        mesh_obj = self.mesh 
+        if mesh_obj is not None and mesh_obj.type == "MESH":
+            shape_keys = mesh_obj.data.shape_keys
+            
+            _MFUpL_shape = "Mouth_Funnel_Up_L"
+            _MFUpR_shape = "Mouth_Funnel_Up_R"
+            _MFDnL_shape = "Mouth_Funnel_Down_L"
+            _MFDnR_shape = "Mouth_Funnel_Down_R"
+            _MC_shape    = "Mouth_Close"
+            
+            if shape_keys is not None:
+                if _MFUpL_shape in shape_keys.key_blocks and _MFUpR_shape in shape_keys.key_blocks:
+                    MFUpL_key = shape_keys.key_blocks[_MFUpL_shape]
+                    MFUpR_key = shape_keys.key_blocks[_MFUpR_shape]
+                    MFDnL_key = shape_keys.key_blocks[_MFDnL_shape]
+                    MFDnR_key = shape_keys.key_blocks[_MFDnR_shape]
+                    MC_key = shape_keys.key_blocks[_MC_shape]
+                    
+                    basis_key = shape_keys.key_blocks["Basis"]
     
+                    LSL_new_key = mesh_obj.shape_key_add(name="lipStickyL", from_mix=False)
+                    LSR_new_key = mesh_obj.shape_key_add(name="lipStickyR", from_mix=False)
+                    
+                    num_coords = len(basis_key.data)
+    
+                    for j in range(num_coords):
+                        if MFUpL_key.data[j] is not None and MFDnL_key.data[j] is not None:
+                            aa_coord = MFUpL_key.data[j].co
+                            bb_coord = MFDnL_key.data[j].co
+                            
+                            aa1_coord = MFUpR_key.data[j].co
+                            bb1_coord = MFDnR_key.data[j].co
+                            
+                            cc_coord = MC_key.data[j].co
+                            
+                            basis_coord = basis_key.data[j].co
+                            
+                            LSL_new_key.data[j].co = basis_coord + (aa1_coord - basis_coord)*0.5 + (bb1_coord - basis_coord)*0.5 + (cc_coord - basis_coord)*0.2
+                            
+                            LSR_new_key.data[j].co = basis_coord + (aa_coord - basis_coord)*0.5 + (bb_coord - basis_coord)*0.5 + (cc_coord - basis_coord)*0.2
+    
+                    #shape_keys.key_blocks.remove(aa_key)
+                    #shape_keys.key_blocks.remove(bb_key)
+    
+                    LSL_new_key.value = 0.0
+                    LSR_new_key.value = 0.0
+
     def reassign_texture(self, _tex_node):
         output_path = (self.folder_path + "\\" + _tex_node.image.name+"."+(_tex_node.image.file_format).lower())
         #_tex_node.image.file_format = 'PNG'
