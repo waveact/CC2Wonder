@@ -27,12 +27,7 @@ class CC2WonderAction(bpy.types.Operator):
         self.convert_bone_data = {"CC_Base_L_Clavicle":"LeftShoulder","CC_Base_L_Upperarm":"LeftArm","CC_Base_L_Forearm":"LeftForeArm","CC_Base_L_Hand":"LeftHand","CC_Base_L_Thumb1":"LeftHandThumb1","CC_Base_L_Thumb2":"LeftHandThumb2","CC_Base_L_Thumb3":"LeftHandThumb3","CC_Base_L_Index1":"LeftHandIndex1","CC_Base_L_Index2":"LeftHandIndex2","CC_Base_L_Index3":"LeftHandIndex3","CC_Base_L_Mid1":"LeftHandMiddle1","CC_Base_L_Mid2":"LeftHandMiddle2","CC_Base_L_Mid3":"LeftHandMiddle3","CC_Base_L_Ring1":"LeftHandRing1","CC_Base_L_Ring2":"LeftHandRing2","CC_Base_L_Ring3":"LeftHandRing3","CC_Base_L_Pinky1":"LeftHandPinky1","CC_Base_L_Pinky2":"LeftHandPinky2","CC_Base_L_Pinky3":"LeftHandPinky3","CC_Base_L_Thigh":"LeftUpLeg","CC_Base_L_Calf":"LeftLeg","CC_Base_L_Foot":"LeftFoot","CC_Base_L_ToeBase":"LeftToeBase","CC_Base_R_Clavicle":"RightShoulder","CC_Base_R_Upperarm":"RightArm","CC_Base_R_Forearm":"RightForeArm","CC_Base_R_Hand":"RightHand","CC_Base_R_Thumb1":"RightHandThumb1","CC_Base_R_Thumb2":"RightHandThumb2","CC_Base_R_Thumb3":"RightHandThumb3","CC_Base_R_Index1":"RightHandIndex1","CC_Base_R_Index2":"RightHandIndex2","CC_Base_R_Index3":"RightHandIndex3","CC_Base_R_Mid1":"RightHandMiddle1","CC_Base_R_Mid2":"RightHandMiddle2","CC_Base_R_Mid3":"RightHandMiddle3","CC_Base_R_Ring1":"RightHandRing1","CC_Base_R_Ring2":"RightHandRing2","CC_Base_R_Ring3":"RightHandRing3","CC_Base_R_Pinky1":"RightHandPinky1","CC_Base_R_Pinky2":"RightHandPinky2","CC_Base_R_Pinky3":"RightHandPinky3","CC_Base_R_Thigh":"RightUpLeg","CC_Base_R_Calf":"RightLeg","CC_Base_R_Foot":"RightFoot","CC_Base_R_ToeBase":"RightToeBase","CC_Base_Head":"Head","CC_Base_NeckTwist01":"Neck","CC_Base_Spine02":"Spine2","CC_Base_Spine01":"Spine1","CC_Base_Waist":"Spine","CC_Base_Hip":"Hips","RL_BoneRoot":"root"}
 
         self.convert_data = {"browInnerDnL":{"Extend":"Brow_Drop_L","Standard":"Brow_Drop_L"},"browInnerDnR":{"Extend":"Brow_Drop_R","Standard":"Brow_Drop_R"},"browInnerUpL":{"Extend":"Brow_Raise_Inner_L","Standard":"Brow_Raise_Inner_L"},"browInnerUpR":{"Extend":"Brow_Raise_Inner_R","Standard":"Brow_Raise_Inner_R"},"browOuterDnL":{"Extend":"","Standard":""},"browOuterDnR":{"Extend":"","Standard":""},"browOuterUpL":{"Extend":"Brow_Raise_Outer_L","Standard":"Brow_Raise_Outer_L"},"browOuterUpR":{"Extend":"Brow_Raise_Outer_R","Standard":"Brow_Raise_Outer_R"},"browSqueezeL":{"Extend":"Brow_Compress_L","Standard":""},"browSqueezeR":{"Extend":"Brow_Compress_R","Standard":""},"cheekBlowL":{"Extend":"Cheek_Puff_L","Standard":"Cheek_Puff_L"},"cheekBlowR":{"Extend":"Cheek_Puff_R","Standard":"Cheek_Puff_R"},"cheekUpL":{"Extend":"Cheek_Raise_L","Standard":"Cheek_Raise_L"},"cheekUpR":{"Extend":"Cheek_Raise_R","Standard":"Cheek_Raise_R"},"eyeBlinkL":{"Extend":"Eye_Blink_L","Standard":"Eye_Blink_L"},"eyeBlinkR":{"Extend":"Eye_Blink_R","Standard":"Eye_Blink_R"},"eyeCompressL":{"Extend":"Cheek_Raise_L","Standard":"Cheek_Raise_L"},"eyeCompressR":{"Extend":"Cheek_Raise_R","Standard":"Cheek_Raise_R"},"eyeDn":{"Extend":"Eye_Look_Down","Standard":"Eye_Look_Down"},"eyeL":{"Extend":"Eye_Look_L","Standard":"Eye_Look_L"},"eyeR":{"Extend":"Eye_Look_R","Standard":"Eye_Look_R"},"eyeSquintL":{"Extend":"Eye_Squint_L","Standard":"Eye_Squint_L"},"eyeSquintR":{"Extend":"Eye_Squint_R","Standard":"Eye_Squint_R"},"eyeUp":{"Extend":"Eye_Look_Up","Standard":"Eye_Look_Up"},"eyeWidenLowerL":{"Extend":"","Standard":""},"eyeWidenLowerR":{"Extend":"","Standard":""},"eyeWidenUpperL":{"Extend":"Eye_Wide_L","Standard":"Eye_Wide_L"},"eyeWidenUpperR":{"Extend":"Eye_Wide_R","Standard":"Eye_Wide_R"},"jawClenchL":{"Extend":"","Standard":""},"jawClenchR":{"Extend":"","Standard":""},"jawIn":{"Extend":"Jaw_Backward","Standard":""},"jawL":{"Extend":"Jaw_L","Standard":"Jaw_L"},"jawOpen":{"Extend":"Jaw_Open","Standard":"Jaw_Open"},"jawOut":{"Extend":"Jaw_Forward","Standard":"Jaw_Forward"},"jawR":{"Extend":"Jaw_R","Standard":"Jaw_R"},"lipChinRaiserL":{"Extend":"","Standard":""},"lipChinRaiserR":{"Extend":"","Standard":""},"lipCloseLower":{"Extend":"","Standard":""},"lipCloseUpper":{"Extend":"","Standard":""},"lipCornerDnL":{"Extend":"Mouth_Frown_L","Standard":"Mouth_Frown_L"},"lipCornerDnR":{"Extend":"Mouth_Frown_R","Standard":"Mouth_Frown_R"},"lipCornerUpL":{"Extend":"Mouth_Smile_Sharp_L","Standard":""},"lipCornerUpR":{"Extend":"Mouth_Smile_Sharp_R","Standard":""},"lipDimplerL":{"Extend":"Mouth_Dimple_L","Standard":"Mouth_Dimple_L"},"lipDimplerR":{"Extend":"Mouth_Dimple_R","Standard":"Mouth_Dimple_R"},"lipFunnelerLower":{"Extend":"","Standard":""},"lipFunnelerUpper":{"Extend":"","Standard":""},"lipLowerDnL":{"Extend":"Mouth_Roll_Out_Lower_L","Standard":""},"lipLowerDnR":{"Extend":"Mouth_Roll_Out_Lower_R","Standard":""},"lipLowerPullDnL":{"Extend":"Mouth_Pull_Lower_L","Standard":""},"lipLowerPullDnR":{"Extend":"Mouth_Pull_Lower_R","Standard":""},"lipLowerUpL":{"Extend":"Mouth_Roll_In_Lower_L","Standard":""},"lipLowerUpR":{"Extend":"Mouth_Roll_In_Lower_R","Standard":""},"lipNarrowL":{"Extend":"","Standard":""},"lipNarrowR":{"Extend":"","Standard":""},"lipPoutLower":{"Extend":"","Standard":""},"lipPoutUpper":{"Extend":"","Standard":""},"lipPresserL":{"Extend":"Mouth_Press_L","Standard":"Mouth_Press_L"},"lipPresserR":{"Extend":"Mouth_Press_R","Standard":"Mouth_Press_R"},"lipPucker":{"Extend":"","Standard":""},"lipPullL":{"Extend":"Mouth_Lower_L","Standard":"Mouth_Lower_L"},"lipPullR":{"Extend":"Mouth_Lower_R","Standard":"Mouth_Lower_R"},"lipPushLower":{"Extend":"","Standard":""},"lipPushUpper":{"Extend":"","Standard":""},"lipSmileClosedL":{"Extend":"Mouth_Smile_L","Standard":""},"lipSmileClosedR":{"Extend":"Mouth_Smile_R","Standard":""},"lipSmileOpenL":{"Extend":"","Standard":""},"lipSmileOpenR":{"Extend":"","Standard":""},"lipSneerL":{"Extend":"","Standard":""},"lipSneerR":{"Extend":"","Standard":""},"lipStickyL":{"Extend":"","Standard":""},"lipStickyR":{"Extend":"","Standard":""},"lipSuckLower":{"Extend":"","Standard":""},"lipSuckUpper":{"Extend":"","Standard":""},"lipSwingL":{"Extend":"Mouth_L","Standard":"Mouth_L"},"lipSwingR":{"Extend":"Mouth_R","Standard":"Mouth_R"},"lipTightnerL":{"Extend":"Mouth_Tighten_L","Standard":""},"lipTightnerR":{"Extend":"Mouth_Tighten_R","Standard":""},"lipUpperDnL":{"Extend":"","Standard":""},"lipUpperDnR":{"Extend":"","Standard":""},"lipUpperUpL":{"Extend":"Mouth_Up_Upper_L","Standard":"Mouth_Up_Upper_L"},"lipUpperUpR":{"Extend":"Mouth_Up_Upper_R","Standard":"Mouth_Up_Upper_R"},"lipWidenL":{"Extend":"","Standard":""},"lipWidenR":{"Extend":"","Standard":""},"noseCompress":{"Extend":"","Standard":""},"noseFlare":{"Extend":"","Standard":""},"noseSneerL":{"Extend":"Nose_Sneer_L","Standard":"Nose_Sneer_L"},"noseSneerR":{"Extend":"Nose_Sneer_R","Standard":"Nose_Sneer_R"},"noseWrinklerL":{"Extend":"Nose_Crease_L","Standard":""},"noseWrinklerR":{"Extend":"Nose_Crease_R","Standard":""}}
-
-        if not filepath.lower().endswith(".blend"):
-            filepath += ".blend"
-
-        bpy.ops.wm.save_as_mainfile(filepath=filepath)
-        
+   
         self.shape_key_mesh = None
         
         self.mesh_obj_list = []
@@ -84,6 +79,11 @@ class CC2WonderAction(bpy.types.Operator):
         self.assign_driver()
         
         self.create_collection_and_move_armature()
+        
+        if not filepath.lower().endswith(".blend"):
+            filepath += ".blend"
+
+        bpy.ops.wm.save_as_mainfile(filepath=filepath)
         
         self.report({'INFO'}, "Export CC Character to Wonder")
         
@@ -469,6 +469,7 @@ class CC2WonderAction(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='OBJECT') 
             
     def create_collection_and_move_armature(self):
+        '''
         armature = self.armature
         
         collection = bpy.data.collections.new("character")
@@ -483,6 +484,9 @@ class CC2WonderAction(bpy.types.Operator):
             obj_collection = mesh_obj.users_collection[0]
             obj_collection.objects.unlink(mesh_obj)
             collection.objects.link(mesh_obj)
+        '''
+        col = bpy.data.collections.get("Collection")
+        col.name = "character"
 
 
 def register():
