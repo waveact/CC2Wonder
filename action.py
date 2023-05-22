@@ -112,7 +112,7 @@ class CC2WonderAction(bpy.types.Operator):
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
-    generated_strings = []  # 保存已生成的字符串
+    generated_strings = []
 
     def process_string(self, _input_string):
         cleaned_string = ''.join(c for c in _input_string if c.isalpha())
