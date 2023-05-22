@@ -3,7 +3,7 @@ import os
 
 class CC2WonderAction(bpy.types.Operator):
     bl_idname = "object.cc2wonder_action"
-    bl_label = "CC2Wonder Action"
+    bl_label = "Save"
     
     filepath: bpy.props.StringProperty(subtype="FILE_PATH")
     
@@ -45,6 +45,8 @@ class CC2WonderAction(bpy.types.Operator):
                 #obj.name = self.mesh_name + "_FACE"
                 self.mesh_obj_list.append(obj)
         
+        self.reset_shape_keys()
+        
         self.rename_bones()
         self.change_bone_parent()
         
@@ -76,7 +78,10 @@ class CC2WonderAction(bpy.types.Operator):
         self.create_stick_shape_keys()
         
         self.rename_shape_keys()
+        
         self.assign_driver()
+        
+        self.reset_shape_keys()
         
         self.create_collection_and_move_armature()
         
@@ -266,7 +271,17 @@ class CC2WonderAction(bpy.types.Operator):
                     key.name = k
                 if key.name == self.convert_data[k]["Standard"]:
                     key.name = k
-                key.value = 0
+                key.value = 0.0
+    
+    def reset_shape_keys(self):
+        bpy.ops.object.mode_set(mode='OBJECT')
+        for obj in bpy.data.objects:
+            if obj.type == 'MESH' and obj.data.shape_keys is not None:
+                shape_keys = obj.data.shape_keys
+
+                for key_block in shape_keys.key_blocks:
+                    key_block.value = 0.0
+                    key_block.keyframe_insert(data_path="value") 
     
     def merge_shape_keys(self, _a_shape, _b_shape, _new_shape):
         mesh_obj = self.shape_key_mesh 
