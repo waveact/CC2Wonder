@@ -1,4 +1,4 @@
-import bpy, os, json
+import bpy, os, json, string
 
 class CC2WonderAction(bpy.types.Operator):
     bl_idname = "object.cc2wonder_action"
@@ -17,6 +17,8 @@ class CC2WonderAction(bpy.types.Operator):
 
         with open(bone_data_path,'r') as f: 
             self.bone_data = json.load(f) 
+        
+        self.generated_strings = []
         
         armature_name = "Armature"
         armature = bpy.data.objects.get(armature_name)
@@ -110,6 +112,19 @@ class CC2WonderAction(bpy.types.Operator):
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
+    generated_strings = []  # 保存已生成的字符串
+
+    def process_string(self, _input_string):
+        cleaned_string = ''.join(c for c in _input_string if c.isalpha())
+        
+        if cleaned_string == "":
+            while True:
+                random_string = ''.join(random.sample(string.ascii_lowercase, 7))
+                if random_string not in self.generated_strings:
+                    self.generated_strings.append(random_string)
+                    return random_string
+        else:
+            return cleaned_string
     
     def rename_bones(self):
         bpy.ops.object.mode_set(mode='POSE')
@@ -126,6 +141,8 @@ class CC2WonderAction(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='OBJECT')
     
     def rename_mesh(self):
+        
+        self.generated_strings = []
         if len(self.mesh_obj_list) == 1:
             self.mesh_obj_list[0].name = self.mesh_name + "_FACE"
             self.mesh_obj_list[0].data.name = self.mesh_name
@@ -137,10 +154,14 @@ class CC2WonderAction(bpy.types.Operator):
                 self.mesh_obj_list[i].data.name = self.mesh_name + "_Base"
                 self.shape_key_mesh = self.mesh_obj_list[i]
                 
-            if self.mesh_obj_list[i].name == "CC_Game_Body":
+            elif self.mesh_obj_list[i].name == "CC_Game_Body":
                 self.mesh_obj_list[i].name = self.mesh_name + "_Base_FACE"
                 self.mesh_obj_list[i].data.name = self.mesh_name + "_Base"
                 self.shape_key_mesh = self.mesh_obj_list[i]
+            else:    
+                new_name = self.process_string(self.mesh_obj_list[i].name)
+                self.mesh_obj_list[i].name = new_name
+                self.mesh_obj_list[i].data.name = new_name
             
     
     def build_material(self):
