@@ -385,10 +385,25 @@ class CC2WonderAction(bpy.types.Operator):
     
                     LSL_new_key.value = 0.0
                     LSR_new_key.value = 0.0
-    
+
     def assign_driver(self):
         armature = self.armature
         mesh_obj = self.shape_key_mesh
+        
+        if mesh_obj.data.shape_keys.key_blocks.get("jawOpen") == None:
+            shape_key = mesh_obj.shape_key_add(name="jawOpen", from_mix=False)
+        if mesh_obj.data.shape_keys.key_blocks.get("jawL") == None:
+            shape_key = mesh_obj.shape_key_add(name="jawL", from_mix=False)
+        if mesh_obj.data.shape_keys.key_blocks.get("jawR") == None:
+            shape_key = mesh_obj.shape_key_add(name="jawR", from_mix=False)
+        if mesh_obj.data.shape_keys.key_blocks.get("eyeUp") == None:
+            shape_key = mesh_obj.shape_key_add(name="eyeUp", from_mix=False)
+        if mesh_obj.data.shape_keys.key_blocks.get("eyeDn") == None:
+            shape_key = mesh_obj.shape_key_add(name="eyeDn", from_mix=False)
+        if mesh_obj.data.shape_keys.key_blocks.get("eyeL") == None:
+            shape_key = mesh_obj.shape_key_add(name="eyeL", from_mix=False)
+        if mesh_obj.data.shape_keys.key_blocks.get("eyeR") == None:
+            shape_key = mesh_obj.shape_key_add(name="eyeR", from_mix=False)
         
         bpy.ops.object.mode_set(mode='POSE')
         
