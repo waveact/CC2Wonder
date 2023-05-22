@@ -266,6 +266,7 @@ class CC2WonderAction(bpy.types.Operator):
                     key.name = k
                 if key.name == self.convert_data[k]["Standard"]:
                     key.name = k
+                key.value = 0
     
     def merge_shape_keys(self, _a_shape, _b_shape, _new_shape):
         mesh_obj = self.shape_key_mesh 
