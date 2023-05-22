@@ -95,6 +95,8 @@ class CC2WonderAction(bpy.types.Operator):
         
         self.assign_driver()
         
+        self.connect_shape_keys()
+        
         self.reset_shape_keys()
         
         self.create_collection_and_move_armature()
@@ -306,20 +308,22 @@ class CC2WonderAction(bpy.types.Operator):
             '''
     
     def rename_shape_keys(self):
-        mesh_obj = self.shape_key_mesh
-        shape_keys = mesh_obj.data.shape_keys.key_blocks
-        if shape_keys is not None:
-            for k in self.expression_data:
-                for index, key in enumerate(shape_keys):
-                    if key.name == self.expression_data[k]["Extend"]:
-                        key.name = k
-                    if key.name == self.expression_data[k]["Standard"]:
-                        key.name = k
-                    if key.name == self.expression_data[k]["ARKit"]:
-                        key.name = k
-                    if key.name == self.expression_data[k]["Tradition"]:
-                        key.name = k
-                    key.value = 0.0
+        for i in range(len(self.mesh_obj_list)):
+            mesh_obj = self.mesh_obj_list[i]
+            if mesh_obj.data.shape_keys is not None:
+                shape_keys = mesh_obj.data.shape_keys.key_blocks
+                if shape_keys is not None:
+                    for k in self.expression_data:
+                        for index, key in enumerate(shape_keys):
+                            if key.name == self.expression_data[k]["Extend"]:
+                                key.name = k
+                            if key.name == self.expression_data[k]["Standard"]:
+                                key.name = k
+                            if key.name == self.expression_data[k]["ARKit"]:
+                                key.name = k
+                            if key.name == self.expression_data[k]["Tradition"]:
+                                key.name = k
+                            key.value = 0.0
     
     def reset_shape_keys(self):
         bpy.ops.object.mode_set(mode='OBJECT')
@@ -332,80 +336,83 @@ class CC2WonderAction(bpy.types.Operator):
                     key_block.keyframe_insert(data_path="value") 
     
     def merge_shape_keys(self, _a_shape, _b_shape, _new_shape):
-        mesh_obj = self.shape_key_mesh 
-        if mesh_obj is not None and mesh_obj.type == "MESH":
-            shape_keys = mesh_obj.data.shape_keys
-            if shape_keys is not None:
-                if _a_shape in shape_keys.key_blocks and _b_shape in shape_keys.key_blocks:
-                    aa_key = shape_keys.key_blocks[_a_shape]
-                    bb_key = shape_keys.key_blocks[_b_shape]
-                    
-                    basis_key = shape_keys.key_blocks["Basis"]
-    
-                    new_key = mesh_obj.shape_key_add(name=_new_shape, from_mix=False)
-                    
-                    num_coords = len(aa_key.data)
-    
-                    for j in range(num_coords):
-                        if aa_key.data[j] is not None and bb_key.data[j] is not None:
-                            aa_coord = aa_key.data[j].co
-                            bb_coord = bb_key.data[j].co
-                            basis_coord = basis_key.data[j].co
-                            
-                            new_key.data[j].co = basis_coord + (aa_coord - basis_coord) + (bb_coord - basis_coord)
-    
-                    #shape_keys.key_blocks.remove(aa_key)
-                    #shape_keys.key_blocks.remove(bb_key)
-    
-                    new_key.value = 0.0
+        for i in range(len(self.mesh_obj_list)):
+            mesh_obj = self.mesh_obj_list[i]
+            if mesh_obj is not None and mesh_obj.type == "MESH":
+                shape_keys = mesh_obj.data.shape_keys
+                if shape_keys is not None:
+                    if _a_shape in shape_keys.key_blocks and _b_shape in shape_keys.key_blocks:
+                        aa_key = shape_keys.key_blocks[_a_shape]
+                        bb_key = shape_keys.key_blocks[_b_shape]
+                        
+                        basis_key = shape_keys.key_blocks["Basis"]
+        
+                        new_key = mesh_obj.shape_key_add(name=_new_shape, from_mix=False)
+                        
+                        num_coords = len(aa_key.data)
+        
+                        for j in range(num_coords):
+                            if aa_key.data[j] is not None and bb_key.data[j] is not None:
+                                aa_coord = aa_key.data[j].co
+                                bb_coord = bb_key.data[j].co
+                                basis_coord = basis_key.data[j].co
+                                
+                                new_key.data[j].co = basis_coord + (aa_coord - basis_coord) + (bb_coord - basis_coord)
+        
+                        #shape_keys.key_blocks.remove(aa_key)
+                        #shape_keys.key_blocks.remove(bb_key)
+        
+                        new_key.value = 0.0
 
     def create_stick_shape_keys(self):
-        mesh_obj = self.shape_key_mesh
-        if mesh_obj is not None and mesh_obj.type == "MESH":
-            shape_keys = mesh_obj.data.shape_keys
-            
-            _MFUpL_shape = "Mouth_Funnel_Up_L"
-            _MFUpR_shape = "Mouth_Funnel_Up_R"
-            _MFDnL_shape = "Mouth_Funnel_Down_L"
-            _MFDnR_shape = "Mouth_Funnel_Down_R"
-            _MC_shape    = "Mouth_Close"
-            
-            if shape_keys is not None:
-                if _MFUpL_shape in shape_keys.key_blocks and _MFUpR_shape in shape_keys.key_blocks :
-                    MFUpL_key = shape_keys.key_blocks[_MFUpL_shape]
-                    MFUpR_key = shape_keys.key_blocks[_MFUpR_shape]
-                    MFDnL_key = shape_keys.key_blocks[_MFDnL_shape]
-                    MFDnR_key = shape_keys.key_blocks[_MFDnR_shape]
-                    MC_key = shape_keys.key_blocks[_MC_shape]
-                    
-                    basis_key = shape_keys.key_blocks["Basis"]
-    
-                    LSL_new_key = mesh_obj.shape_key_add(name="lipStickyL", from_mix=False)
-                    LSR_new_key = mesh_obj.shape_key_add(name="lipStickyR", from_mix=False)
-                    
-                    num_coords = len(basis_key.data)
-    
-                    for j in range(num_coords):
-                        if MFUpL_key.data[j] is not None and MFDnL_key.data[j] is not None:
-                            aa_coord = MFUpL_key.data[j].co
-                            bb_coord = MFDnL_key.data[j].co
-                            
-                            aa1_coord = MFUpR_key.data[j].co
-                            bb1_coord = MFDnR_key.data[j].co
-                            
-                            cc_coord = MC_key.data[j].co
-                            
-                            basis_coord = basis_key.data[j].co
-                            
-                            LSL_new_key.data[j].co = basis_coord + (aa1_coord - basis_coord)*0.5 + (bb1_coord - basis_coord)*0.5 + (cc_coord - basis_coord)*0.2
-                            
-                            LSR_new_key.data[j].co = basis_coord + (aa_coord - basis_coord)*0.5 + (bb_coord - basis_coord)*0.5 + (cc_coord - basis_coord)*0.2
-    
-                    #shape_keys.key_blocks.remove(aa_key)
-                    #shape_keys.key_blocks.remove(bb_key)
-    
-                    LSL_new_key.value = 0.0
-                    LSR_new_key.value = 0.0
+        for i in range(len(self.mesh_obj_list)):
+            mesh_obj = self.mesh_obj_list[i]
+
+            if mesh_obj is not None and mesh_obj.type == "MESH":
+                shape_keys = mesh_obj.data.shape_keys
+                
+                _MFUpL_shape = "Mouth_Funnel_Up_L"
+                _MFUpR_shape = "Mouth_Funnel_Up_R"
+                _MFDnL_shape = "Mouth_Funnel_Down_L"
+                _MFDnR_shape = "Mouth_Funnel_Down_R"
+                _MC_shape    = "Mouth_Close"
+                
+                if shape_keys is not None:
+                    if _MFUpL_shape in shape_keys.key_blocks and _MFUpR_shape in shape_keys.key_blocks :
+                        MFUpL_key = shape_keys.key_blocks[_MFUpL_shape]
+                        MFUpR_key = shape_keys.key_blocks[_MFUpR_shape]
+                        MFDnL_key = shape_keys.key_blocks[_MFDnL_shape]
+                        MFDnR_key = shape_keys.key_blocks[_MFDnR_shape]
+                        MC_key = shape_keys.key_blocks[_MC_shape]
+                        
+                        basis_key = shape_keys.key_blocks["Basis"]
+        
+                        LSL_new_key = mesh_obj.shape_key_add(name="lipStickyL", from_mix=False)
+                        LSR_new_key = mesh_obj.shape_key_add(name="lipStickyR", from_mix=False)
+                        
+                        num_coords = len(basis_key.data)
+        
+                        for j in range(num_coords):
+                            if MFUpL_key.data[j] is not None and MFDnL_key.data[j] is not None:
+                                aa_coord = MFUpL_key.data[j].co
+                                bb_coord = MFDnL_key.data[j].co
+                                
+                                aa1_coord = MFUpR_key.data[j].co
+                                bb1_coord = MFDnR_key.data[j].co
+                                
+                                cc_coord = MC_key.data[j].co
+                                
+                                basis_coord = basis_key.data[j].co
+                                
+                                LSL_new_key.data[j].co = basis_coord + (aa1_coord - basis_coord)*0.5 + (bb1_coord - basis_coord)*0.5 + (cc_coord - basis_coord)*0.2
+                                
+                                LSR_new_key.data[j].co = basis_coord + (aa_coord - basis_coord)*0.5 + (bb_coord - basis_coord)*0.5 + (cc_coord - basis_coord)*0.2
+        
+                        #shape_keys.key_blocks.remove(aa_key)
+                        #shape_keys.key_blocks.remove(bb_key)
+        
+                        LSL_new_key.value = 0.0
+                        LSR_new_key.value = 0.0
 
     def assign_driver(self):
         armature = self.armature
@@ -537,7 +544,35 @@ class CC2WonderAction(bpy.types.Operator):
         eye_R_z_driver.driver.expression = "Left*0.5+Right*-0.5"
         
         bpy.ops.object.mode_set(mode='OBJECT')
-    
+
+    def connect_shape_keys(self):
+        
+        for i in range(len(self.mesh_obj_list)):
+            if self.mesh_obj_list[i] != self.shape_key_mesh:
+                source_shape_keys = self.shape_key_mesh.data.shape_keys
+                target_shape_keys = self.mesh_obj_list[i].data.shape_keys
+                try:
+                    for target_key_block in target_shape_keys.key_blocks:
+                        key_name = target_key_block.name
+                
+                        if key_name in source_shape_keys.key_blocks:
+            
+                            driver = target_key_block.driver_add("value").driver
+                            #driver.type = 'AVERAGE'
+                            source_path = 'key_blocks["{}"].value'.format(key_name)
+                            target_path = 'key_blocks["{}"].value'.format(key_name)
+            
+                            var = driver.variables.new()
+                            var.name = 'var'
+                            var.type = 'SINGLE_PROP'
+                            var.targets[0].id_type = 'KEY'
+                            var.targets[0].id = source_shape_keys
+                            var.targets[0].data_path = source_path
+                
+                            driver.expression = 'var'
+                except:
+                    pass
+
     def change_bone_parent(self):
         bpy.ops.object.mode_set(mode='EDIT') 
         
