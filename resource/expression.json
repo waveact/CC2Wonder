@@ -1,0 +1,542 @@
+{
+    "browInnerDnL": {
+        "Extend": "Brow_Drop_L",
+        "Standard": "Brow_Drop_L",
+        "Tradition": "Brow_Drop_Left",
+        "ARKit": "A02_Brow_Down_Left"
+    },
+    "browInnerDnR": {
+        "Extend": "Brow_Drop_R",
+        "Standard": "Brow_Drop_R",
+        "Tradition": "Brow_Drop_Right",
+        "ARKit": "A03_Brow_Down_Right"
+    },
+    "browInnerUpL": {
+        "Extend": "Brow_Raise_Inner_L",
+        "Standard": "Brow_Raise_Inner_L",
+        "Tradition": "Brow_Raise_Inner_Left",
+        "ARKit": ""
+    },
+    "browInnerUpR": {
+        "Extend": "Brow_Raise_Inner_R",
+        "Standard": "Brow_Raise_Inner_R",
+        "Tradition": "Brow_Raise_Inner_Right",
+        "ARKit": ""
+    },
+    "browOuterDnL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "browOuterDnR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "browOuterUpL": {
+        "Extend": "Brow_Raise_Outer_L",
+        "Standard": "Brow_Raise_Outer_L",
+        "Tradition": "Brow_Raise_Outer_Left",
+        "ARKit": "A04_Brow_Outer_Up_Left"
+    },
+    "browOuterUpR": {
+        "Extend": "Brow_Raise_Outer_R",
+        "Standard": "Brow_Raise_Outer_R",
+        "Tradition": "Brow_Raise_Outer_Right",
+        "ARKit": "A05_Brow_Outer_Up_Right"
+    },
+    "browSqueezeL": {
+        "Extend": "Brow_Compress_L",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "browSqueezeR": {
+        "Extend": "Brow_Compress_R",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "cheekBlowL": {
+        "Extend": "Cheek_Puff_L",
+        "Standard": "Cheek_Puff_L",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "cheekBlowR": {
+        "Extend": "Cheek_Puff_R",
+        "Standard": "Cheek_Puff_R",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "cheekUpL": {
+        "Extend": "Cheek_Raise_L",
+        "Standard": "Cheek_Raise_L",
+        "Tradition": "Cheek Raise L",
+        "ARKit": "A21_Cheek_Squint_Left"
+    },
+    "cheekUpR": {
+        "Extend": "Cheek_Raise_R",
+        "Standard": "Cheek_Raise_R",
+        "Tradition": "Cheek Raise R",
+        "ARKit": "A22_Cheek_Squint_Right"
+    },
+    "eyeBlinkL": {
+        "Extend": "Eye_Blink_L",
+        "Standard": "Eye_Blink_L",
+        "Tradition": "Eye Blink L",
+        "ARKit": "A14_Eye_Blink_Left"
+    },
+    "eyeBlinkR": {
+        "Extend": "Eye_Blink_R",
+        "Standard": "Eye_Blink_R",
+        "Tradition": "Eye Blink R",
+        "ARKit": "A15_Eye_Blink_Right"
+    },
+    "eyeCompressL": {
+        "Extend": "Cheek_Raise_L",
+        "Standard": "Cheek_Raise_L",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "eyeCompressR": {
+        "Extend": "Cheek_Raise_R",
+        "Standard": "Cheek_Raise_R",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "eyeDn": {
+        "Extend": "Eye_Look_Down",
+        "Standard": "Eye_Look_Down",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "eyeL": {
+        "Extend": "Eye_Look_L",
+        "Standard": "Eye_Look_L",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "eyeR": {
+        "Extend": "Eye_Look_R",
+        "Standard": "Eye_Look_R",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "eyeSquintL": {
+        "Extend": "Eye_Squint_L",
+        "Standard": "Eye_Squint_L",
+        "Tradition": "Eye Squint L",
+        "ARKit": "A16_Eye_Squint_Left"
+    },
+    "eyeSquintR": {
+        "Extend": "Eye_Squint_R",
+        "Standard": "Eye_Squint_R",
+        "Tradition": "Eye Squint R",
+        "ARKit": "A17_Eye_Squint_Right"
+    },
+    "eyeUp": {
+        "Extend": "Eye_Look_Up",
+        "Standard": "Eye_Look_Up",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "eyeWidenLowerL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "eyeWidenLowerR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "eyeWidenUpperL": {
+        "Extend": "Eye_Wide_L",
+        "Standard": "Eye_Wide_L",
+        "Tradition": "Eye Wide L",
+        "ARKit": "A18_Eye_Wide_Left"
+    },
+    "eyeWidenUpperR": {
+        "Extend": "Eye_Wide_R",
+        "Standard": "Eye_Wide_R",
+        "Tradition": "Eye Wide R",
+        "ARKit": "A19_Eye_Wide_Right"
+    },
+    "jawClenchL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "jawClenchR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "jawIn": {
+        "Extend": "Jaw_Backward",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "jawL": {
+        "Extend": "Jaw_L",
+        "Standard": "Jaw_L",
+        "Tradition": "Turn_Jaw_L",
+        "ARKit": "A27_Jaw_Left"
+    },
+    "jawOpen": {
+        "Extend": "Jaw_Open",
+        "Standard": "Jaw_Open",
+        "Tradition": "Turn_Jaw_Up_Down",
+        "ARKit": "A25_Jaw_Open"
+    },
+    "jawOut": {
+        "Extend": "Jaw_Forward",
+        "Standard": "Jaw_Forward",
+        "Tradition": "",
+        "ARKit": "A26_Jaw_Forward"
+    },
+    "jawR": {
+        "Extend": "Jaw_R",
+        "Standard": "Jaw_R",
+        "Tradition": "Turn_Jaw_R",
+        "ARKit": "A28_Jaw_Right"
+    },
+    "lipChinRaiserL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipChinRaiserR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipCloseLower": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipCloseUpper": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipCornerDnL": {
+        "Extend": "Mouth_Frown_L",
+        "Standard": "Mouth_Frown_L",
+        "Tradition": "Mouth Frown L",
+        "ARKit": "A40_Mouth_Frown_Left"
+    },
+    "lipCornerDnR": {
+        "Extend": "Mouth_Frown_R",
+        "Standard": "Mouth_Frown_R",
+        "Tradition": "Mouth Frown R",
+        "ARKit": "A41_Mouth_Frown_Right"
+    },
+    "lipCornerUpL": {
+        "Extend": "Mouth_Smile_Sharp_L",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipCornerUpR": {
+        "Extend": "Mouth_Smile_Sharp_R",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipDimplerL": {
+        "Extend": "Mouth_Dimple_L",
+        "Standard": "Mouth_Dimple_L",
+        "Tradition": "Mouth Dimple L",
+        "ARKit": "A42_Mouth_Dimple_Left"
+    },
+    "lipDimplerR": {
+        "Extend": "Mouth_Dimple_R",
+        "Standard": "Mouth_Dimple_R",
+        "Tradition": "Mouth Dimple R",
+        "ARKit": "A43_Mouth_Dimple_Right"
+    },
+    "lipFunnelerLower": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipFunnelerUpper": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipLowerDnL": {
+        "Extend": "Mouth_Roll_Out_Lower_L",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipLowerDnR": {
+        "Extend": "Mouth_Roll_Out_Lower_R",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipLowerPullDnL": {
+        "Extend": "Mouth_Pull_Lower_L",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipLowerPullDnR": {
+        "Extend": "Mouth_Pull_Lower_R",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipLowerUpL": {
+        "Extend": "Mouth_Roll_In_Lower_L",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipLowerUpR": {
+        "Extend": "Mouth_Roll_In_Lower_R",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipNarrowL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipNarrowR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipPoutLower": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipPoutUpper": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipPresserL": {
+        "Extend": "Mouth_Press_L",
+        "Standard": "Mouth_Press_L",
+        "Tradition": "",
+        "ARKit": "A48_Mouth_Press_Left"
+    },
+    "lipPresserR": {
+        "Extend": "Mouth_Press_R",
+        "Standard": "Mouth_Press_R",
+        "Tradition": "",
+        "ARKit": "A49_Mouth_Press_Right"
+    },
+    "lipPucker": {
+        "Extend": "",
+        "Standard": "Mouth_Pucker",
+        "Tradition": "Mouth Pucker",
+        "ARKit": "A30_Mouth_Pucker"
+    },
+    "lipPullL": {
+        "Extend": "Mouth_Lower_L",
+        "Standard": "Mouth_Lower_L",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipPullR": {
+        "Extend": "Mouth_Lower_R",
+        "Standard": "Mouth_Lower_R",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipPushLower": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipPushUpper": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipSmileClosedL": {
+        "Extend": "Mouth_Smile_L",
+        "Standard": "Mouth_Smile_L",
+        "Tradition": "Mouth Smile L",
+        "ARKit": "A38_Mouth_Smile_Left"
+    },
+    "lipSmileClosedR": {
+        "Extend": "Mouth_Smile_R",
+        "Standard": "Mouth_Smile_R",
+        "Tradition": "Mouth Smile R",
+        "ARKit": "A39_Mouth_Smile_Right"
+    },
+    "lipSmileOpenL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipSmileOpenR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipSneerL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipSneerR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipStickyL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipStickyR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipSuckLower": {
+        "Extend": "",
+        "Standard": "Mouth_Roll_In_Lower",
+        "Tradition": "",
+        "ARKit": "A34_Mouth_Roll_Lower"
+    },
+    "lipSuckUpper": {
+        "Extend": "",
+        "Standard": "Mouth_Roll_In_Upper",
+        "Tradition": "",
+        "ARKit": "A33_Mouth_Roll_Upper"
+    },
+    "lipSwingL": {
+        "Extend": "Mouth_L",
+        "Standard": "Mouth_L",
+        "Tradition": "Mouth L",
+        "ARKit": "A31_Mouth_Left"
+    },
+    "lipSwingR": {
+        "Extend": "Mouth_R",
+        "Standard": "Mouth_R",
+        "Tradition": "Mouth R",
+        "ARKit": "A32_Mouth_Right"
+    },
+    "lipTightnerL": {
+        "Extend": "Mouth_Tighten_L",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipTightnerR": {
+        "Extend": "Mouth_Tighten_R",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipUpperDnL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipUpperDnR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipUpperUpL": {
+        "Extend": "Mouth_Up_Upper_L",
+        "Standard": "Mouth_Up_Upper_L",
+        "Tradition": "Mouth Snarl Upper L",
+        "ARKit": "A44_Mouth_Upper_Up_Left"
+    },
+    "lipUpperUpR": {
+        "Extend": "Mouth_Up_Upper_R",
+        "Standard": "Mouth_Up_Upper_R",
+        "Tradition": "Mouth Snarl Upper R",
+        "ARKit": "A45_Mouth_Upper_Up_Right"
+    },
+    "lipWidenL": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "lipWidenR": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "noseCompress": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "noseFlare": {
+        "Extend": "",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "noseSneerL": {
+        "Extend": "Nose_Sneer_L",
+        "Standard": "Nose_Sneer_L",
+        "Tradition": "",
+        "ARKit": "A23_Nose_Sneer_Left"
+    },
+    "noseSneerR": {
+        "Extend": "Nose_Sneer_R",
+        "Standard": "Nose_Sneer_R",
+        "Tradition": "",
+        "ARKit": "A24_Nose_Sneer_Right"
+    },
+    "noseWrinklerL": {
+        "Extend": "Nose_Crease_L",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    },
+    "noseWrinklerR": {
+        "Extend": "Nose_Crease_R",
+        "Standard": "",
+        "Tradition": "",
+        "ARKit": ""
+    }
+}
