@@ -52,6 +52,7 @@ class CC2WonderAction(bpy.types.Operator):
         
         self.delete_all_shape_key_actions()
         self.delete_bone_animations()
+        self.reset_all_mesh_scale()
         
         self.reset_shape_keys()
         
@@ -145,7 +146,11 @@ class CC2WonderAction(bpy.types.Operator):
             pb.location = (0, 0, 0)
             pb.rotation_quaternion =(1.0, 0.0, 0.0, 0.0)
         
-        
+    
+    def reset_all_mesh_scale(self):
+        for i in range(len(self.mesh_obj_list)):
+            self.mesh_obj_list[i].scale = (1.0, 1.0, 1.0)
+    
     def rename_bones(self):
         bpy.ops.object.mode_set(mode='POSE')
     
