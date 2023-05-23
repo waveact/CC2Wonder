@@ -6,7 +6,7 @@ Converting Reallusion CC characters to be compatible with the Wonder Studio plat
 https://youtu.be/mE5Afw7Z44w
 
 **Supported Version**  
-- Blender 3.4 (DO NOT USE 3.5)
+- Blender 3.4 **(DO NOT USE 3.5)**
 - Character Creator 4.22 above  
 
 **Supported Assets**  
