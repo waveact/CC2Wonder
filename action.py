@@ -50,6 +50,9 @@ class CC2WonderAction(bpy.types.Operator):
                 #obj.name = self.mesh_name + "_FACE"
                 self.mesh_obj_list.append(obj)
         
+        self.delete_all_shape_key_actions()
+        self.delete_bone_animations()
+        
         self.reset_shape_keys()
         
         self.rename_bones()
@@ -97,7 +100,7 @@ class CC2WonderAction(bpy.types.Operator):
         
         self.connect_shape_keys()
         
-        self.reset_shape_keys()
+        #self.reset_shape_keys()
         
         self.create_collection_and_move_armature()
         
@@ -114,8 +117,6 @@ class CC2WonderAction(bpy.types.Operator):
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
-    generated_strings = []
-
     def process_string(self, _input_string):
         cleaned_string = ''.join(c for c in _input_string if c.isalpha())
         
@@ -127,10 +128,27 @@ class CC2WonderAction(bpy.types.Operator):
                     return random_string
         else:
             return cleaned_string
-    
+
+    def delete_all_shape_key_actions(self):
+        for a in bpy.data.actions:
+            bpy.data.actions.remove(a)
+            
+    def delete_bone_animations(self):
+        if self.armature.data.animation_data and self.armature.data.animation_data.action:
+            bpy.data.actions.remove(self.armature.data.animation_data.action)
+        
+        bone_list = ["CC_Base_NeckTwist02", "CC_Base_FacialBone", "CC_Base_JawRoot", "CC_Base_R_Eye", "CC_Base_L_Eye", "CC_Base_UpperJaw", "CC_Base_Teeth01", "CC_Base_Tongue01", "CC_Base_Tongue02", "CC_Base_Tongue03", "CC_Base_Teeth02"]
+        
+        for i in range(len(bone_list)):
+            name = bone_list[i]
+            pb = self.armature.pose.bones.get(name) # None if no bone named name
+            pb.location = (0, 0, 0)
+            pb.rotation_quaternion =(1.0, 0.0, 0.0, 0.0)
+        
+        
     def rename_bones(self):
         bpy.ops.object.mode_set(mode='POSE')
-       
+    
         for name in self.bone_data:
             # get the pose bone with name
             bone = self.armature.pose.bones.get(name)
@@ -333,7 +351,7 @@ class CC2WonderAction(bpy.types.Operator):
 
                 for key_block in shape_keys.key_blocks:
                     key_block.value = 0.0
-                    key_block.keyframe_insert(data_path="value") 
+                    #key_block.keyframe_insert(data_path="value") 
     
     def merge_shape_keys(self, _a_shape, _b_shape, _new_shape):
         for i in range(len(self.mesh_obj_list)):
