@@ -11,6 +11,7 @@ class CC2WonderAction(bpy.types.Operator):
         resource_path = os.path.join(addon_path, "resource")
         expression_data_path = os.path.join(resource_path, "expression.json")
         bone_data_path = os.path.join(resource_path, "bone.json")
+        self.res_map_path = os.path.join(resource_path, "maps")
 
         with open(expression_data_path,'r') as f: 
             self.expression_data = json.load(f) 
@@ -189,6 +190,15 @@ class CC2WonderAction(bpy.types.Operator):
                 self.mesh_obj_list[i].data.name = new_name
             
     
+    def create_texture_node(self, _bsdf, _node_tree, _img_path, _output, _input):
+        texture_node = _node_tree.nodes.new('ShaderNodeTexImage')
+        texture_node.location = (100, 0)
+        texture_node.image = bpy.data.images.load(_img_path)
+        texture_node.image.source = "TILED"
+        links = _node_tree.links
+        links.new(texture_node.outputs[_output], _bsdf.inputs[_input])        
+
+    
     def build_material(self):
         folder_path = self.folder_path
         
@@ -230,7 +240,39 @@ class CC2WonderAction(bpy.types.Operator):
                         bsdf = node
                         if len(bsdf.inputs["Base Color"].links) > 0:
                             diffuse_channel = bsdf.inputs["Base Color"].links[0].from_node
+                        '''
+                        else:
+                            node_tree = material.node_tree
+                            base_color = bsdf.inputs["Base Color"].default_value
+                            image = bpy.data.images.new('Base_Color', width=1, height=1)
+                            image.generated_width = 1
+                            image.generated_height = 1
+                            image.generated_type = 'BLANK'
+                            image.pixels[:] = base_color[:]
                             
+                            pixels = list(image.pixels)
+                            for i in range(3, len(pixels), 4):
+                                pixels[i] = 0.0
+                            image.pixels = tuple(pixels)
+
+                            #name = str(int(''.join(filter(str.isdigit, f"{base_color[:]}"))))
+                            name = f"{base_color[:]}"
+    
+                            image.file_format = 'PNG'
+                            image.filepath_raw = folder_path + "\\" + name + ".png"
+                            image.save()
+
+                            diffuse_texture_node = node_tree.nodes.new('ShaderNodeTexImage')
+                            diffuse_texture_node.location = (-200, 0)
+                            diffuse_texture_node.image = bpy.data.images.load(image.filepath_raw)
+                            #diffuse_texture_node.image.source = "TILED"
+
+                            links1 = node_tree.links
+                            links1.new(diffuse_texture_node.outputs['Color'], bsdf.inputs['Base Color'])
+                            diffuse_channel = bsdf.inputs["Base Color"].links[0].from_node
+                        '''    
+
+                        
                         if len(bsdf.inputs["Normal"].links) > 0:
                             normal_channel = bsdf.inputs["Normal"].links[0].from_node
                             
@@ -276,7 +318,7 @@ class CC2WonderAction(bpy.types.Operator):
             mesh_obj.data.materials.append(new_material)
         
             new_material.use_nodes = True
-            new_material.blend_method = "CLIP"
+            new_material.blend_method = "HASHED"
             
             node_tree = new_material.node_tree
             
@@ -285,11 +327,17 @@ class CC2WonderAction(bpy.types.Operator):
             for node in node_tree.nodes:
                 if node.type == 'BSDF_PRINCIPLED':
                     bsdf = node
-            
+            '''
+            if (mesh_name == "CCMesh_Base"):
+                self.create_texture_node(bsdf, node_tree, self.res_map_path + "\\CCMesh_Base_1001_TEX_THICK.png", 'Color', "Subsurface")
+                self.create_texture_node(bsdf, node_tree, self.res_map_path + "\\CCMesh_Base_1001_TEX_TRANSWEIGHT.png", 'Color', "Subsurface Radius")
+
+                bsdf.subsurface_color = (0.651, 0.418, 0.178, 1.0)
+            '''
             #diffuse
             if (len(diffuse_texture_set) > 0):
                 diffuse_texture_node = node_tree.nodes.new('ShaderNodeTexImage')
-                diffuse_texture_node.location = (-200, 0)
+                diffuse_texture_node.location = (200, 0)
                 diffuse_texture_node.image = bpy.data.images.load(diffuse_texture_set[0])
                 diffuse_texture_node.image.source = "TILED"
                 '''
@@ -303,6 +351,7 @@ class CC2WonderAction(bpy.types.Operator):
                 links4 = node_tree.links
                 links4.new(diffuse_texture_node.outputs['Alpha'], bsdf.inputs['Alpha'])
                 
+                
             #normal
             if (len(normal_texture_set) > 0):
                 normal_map_node = node_tree.nodes.new('ShaderNodeNormalMap')
@@ -312,6 +361,7 @@ class CC2WonderAction(bpy.types.Operator):
                 normal_texture_node.location = (-200, -200)
                 normal_texture_node.image = bpy.data.images.load(normal_texture_set[0])
                 normal_texture_node.image.source = "TILED"
+                normal_texture_node.image.colorspace_settings.name = 'Non-Color'
                 
                 links2 = node_tree.links
                 links2.new(normal_texture_node.outputs['Color'], normal_map_node.inputs['Color'])
