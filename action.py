@@ -1,4 +1,4 @@
-import bpy, os, json, string
+import bpy, os, json, string, shutil
 
 class CC2WonderAction(bpy.types.Operator):
     bl_idname = "object.cc2wonder_action"
@@ -197,10 +197,14 @@ class CC2WonderAction(bpy.types.Operator):
         texture_node.image.source = "TILED"
         links = _node_tree.links
         links.new(texture_node.outputs[_output], _bsdf.inputs[_input])        
-
     
     def build_material(self):
         folder_path = self.folder_path
+        
+        temp_folder = self.folder_path + "\\tmp"
+        
+        if not os.path.exists(temp_folder):
+            os.makedirs(temp_folder)
         
         for i in range(len(self.mesh_obj_list)):
             mesh_obj = self.mesh_obj_list[i]
@@ -214,9 +218,10 @@ class CC2WonderAction(bpy.types.Operator):
                         for loop_index in poly.loop_indices:
                             uv_layer = mesh_obj.data.uv_layers.active.data[loop_index]
                             uv = uv_layer.uv
-        
-                            uv[0] += material_index
-                            uv[1] += 0
+                            
+                            if material_index != 0:
+                                uv[0] += material_index % 10
+                                uv[1] += int(material_index / 10)
             
             diffuse_texture_set = []
             normal_texture_set = []
@@ -224,7 +229,8 @@ class CC2WonderAction(bpy.types.Operator):
             
             for j in range(len(materials)):
                 material = materials[j]
-            
+                
+                
                 udim_index = 1001 + j
                 
                 nodes = material.node_tree.nodes
@@ -240,26 +246,32 @@ class CC2WonderAction(bpy.types.Operator):
                         bsdf = node
                         if len(bsdf.inputs["Base Color"].links) > 0:
                             diffuse_channel = bsdf.inputs["Base Color"].links[0].from_node
-                        '''
+                     
                         else:
                             node_tree = material.node_tree
                             base_color = bsdf.inputs["Base Color"].default_value
-                            image = bpy.data.images.new('Base_Color', width=1, height=1)
+                            float_color = [round(c, 6) for c in base_color[:3]] + [1.0]
+                            
+                            image = bpy.data.images.new('Base_Color', alpha=True, width=1, height=1)
                             image.generated_width = 1
                             image.generated_height = 1
                             image.generated_type = 'BLANK'
-                            image.pixels[:] = base_color[:]
-                            
+                            #image.use_alpha = True
+                            image.alpha_mode = 'STRAIGHT'
+                            image.pixels = float_color
+                            #image.pixels = [1.0, 0.0, 0.0, 0.0] 
+                            #image.pixels[:] = base_color[:]
+                            '''
                             pixels = list(image.pixels)
                             for i in range(3, len(pixels), 4):
                                 pixels[i] = 0.0
                             image.pixels = tuple(pixels)
-
+                            '''
                             #name = str(int(''.join(filter(str.isdigit, f"{base_color[:]}"))))
                             name = f"{base_color[:]}"
     
                             image.file_format = 'PNG'
-                            image.filepath_raw = folder_path + "\\" + name + ".png"
+                            image.filepath_raw = temp_folder + "\\" + name + ".png"
                             image.save()
 
                             diffuse_texture_node = node_tree.nodes.new('ShaderNodeTexImage')
@@ -270,7 +282,7 @@ class CC2WonderAction(bpy.types.Operator):
                             links1 = node_tree.links
                             links1.new(diffuse_texture_node.outputs['Color'], bsdf.inputs['Base Color'])
                             diffuse_channel = bsdf.inputs["Base Color"].links[0].from_node
-                        '''    
+                        
 
                         
                         if len(bsdf.inputs["Normal"].links) > 0:
@@ -379,6 +391,8 @@ class CC2WonderAction(bpy.types.Operator):
                 links4 = node_tree.links
                 links4.new(opacity_texture_node.outputs['Color'], bsdf.inputs['Alpha'])
             '''
+            if os.path.exists(temp_folder):
+                shutil.rmtree(temp_folder)
     
     def rename_shape_keys(self):
         for i in range(len(self.mesh_obj_list)):
