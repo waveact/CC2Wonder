@@ -131,6 +131,13 @@ class CC2WonderAction(bpy.types.Operator):
         else:
             return cleaned_string
 
+    def convert_jpg_to_png(self, jpg_file_path, png_file_path):
+        bpy.ops.image.open(filepath=jpg_file_path)
+        image22 = bpy.data.images[-1]
+        image.colorspace_settings.name = 'sRGB'
+        image.save_render(filepath=png_file_path, scene=bpy.context.scene)
+        bpy.data.images.remove(image)
+
     def delete_all_shape_key_actions(self):
         for a in bpy.data.actions:
             bpy.data.actions.remove(a)
@@ -188,13 +195,31 @@ class CC2WonderAction(bpy.types.Operator):
                 new_name = self.process_string(self.mesh_obj_list[i].name)
                 self.mesh_obj_list[i].name = new_name
                 self.mesh_obj_list[i].data.name = new_name
-            
-    
-    def create_texture_node(self, _bsdf, _node_tree, _img_path, _output, _input):
+
+    def copy_file_to_folder(self, source_file, destination_folder):
+        # Create the destination folder if it doesn't exist
+        if not os.path.exists(destination_folder):
+            os.makedirs(destination_folder)
+        
+        # Get the filename from the source file path
+        filename = os.path.basename(source_file)
+        
+        # Construct the destination file path
+        destination_file = os.path.join(destination_folder, filename)
+        
+        # Remove the destination file if it already exists
+        if os.path.exists(destination_file):
+            os.remove(destination_file)
+        
+        # Copy the file to the destination folder
+        shutil.copy2(source_file, destination_file)
+
+    def create_texture_node(self, _bsdf, _node_tree, _img_path, _color_space, _output, _input):
         texture_node = _node_tree.nodes.new('ShaderNodeTexImage')
         texture_node.location = (100, 0)
         texture_node.image = bpy.data.images.load(_img_path)
         texture_node.image.source = "TILED"
+        texture_node.image.colorspace_settings.name = _color_space
         links = _node_tree.links
         links.new(texture_node.outputs[_output], _bsdf.inputs[_input])        
     
@@ -291,14 +316,31 @@ class CC2WonderAction(bpy.types.Operator):
                         if normal_channel.type == 'NORMAL_MAP':
                             if len(normal_channel.inputs["Color"].links) > 0 :
                                 normal_channel = bsdf.inputs["Normal"].links[0].from_node.inputs["Color"].links[0].from_node
-        
+                
+
                 for node_image in nodes:
                     if node_image.type == 'TEX_IMAGE':
                         if (node_image == diffuse_channel):
                             texture_path = bpy.path.abspath(node_image.image.filepath)
                             node_image.image.name = mesh_name + "_" + str(udim_index) + "_TEX_DIFF"
                             output_path = (folder_path + "\\" + node_image.image.name+".png")
+                            '''
+                            image = bpy.data.images.load(texture_path)
+                            image.colorspace_settings.name = 'sRGB'
+                            output_image = bpy.data.images.new(name="output_image", width=image.size[0], height=image.size[1])
+                            output_image.colorspace_settings.name = 'sRGB'
+                            pixels = list(image.pixels)
+                            output_pixels = []
+                            for i in range(0, len(pixels), 4):
+                                r, g, b, a = pixels[i:i+4]
+                                output_pixels.extend([r, g, b, a])
+                            output_image.pixels.foreach_set(output_pixels)
+                            
+                            output_image.save_render(filepath=output_path)
+                            '''
+                            #node_image.image.colorspace_settings.name = 'sRGB'
                             node_image.image.save_render(output_path)
+                            #self.convert_jpg_to_png(texture_path, output_path)
                             
                             diffuse_texture_set.append(output_path)
         
@@ -339,13 +381,12 @@ class CC2WonderAction(bpy.types.Operator):
             for node in node_tree.nodes:
                 if node.type == 'BSDF_PRINCIPLED':
                     bsdf = node
-            '''
-            if (mesh_name == "CCMesh_Base"):
-                self.create_texture_node(bsdf, node_tree, self.res_map_path + "\\CCMesh_Base_1001_TEX_THICK.png", 'Color', "Subsurface")
-                self.create_texture_node(bsdf, node_tree, self.res_map_path + "\\CCMesh_Base_1001_TEX_TRANSWEIGHT.png", 'Color', "Subsurface Radius")
+                    node.subsurface_method = 'BURLEY'
 
-                bsdf.subsurface_color = (0.651, 0.418, 0.178, 1.0)
-            '''
+
+                #bsdf.inputs["Subsurface Color"].default_value = (0.651, 0.418, 0.178, 1.0)
+                #bsdf.inputs["Subsurface Color"].default_value = (0.651, 0.418, 0.178, 1.0)
+
             #diffuse
             if (len(diffuse_texture_set) > 0):
                 diffuse_texture_node = node_tree.nodes.new('ShaderNodeTexImage')
@@ -363,6 +404,30 @@ class CC2WonderAction(bpy.types.Operator):
                 links4 = node_tree.links
                 links4.new(diffuse_texture_node.outputs['Alpha'], bsdf.inputs['Alpha'])
                 
+                if (mesh_name == "CCMesh_Base"):
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1001_TEX_THICK.png", folder_path)
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1002_TEX_THICK.png", folder_path)
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1003_TEX_THICK.png", folder_path)
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1004_TEX_THICK.png", folder_path)
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1005_TEX_THICK.png", folder_path)
+                    
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1001_TEX_ROUGH.jpg", folder_path)
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1002_TEX_ROUGH.jpg", folder_path)
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1003_TEX_ROUGH.jpg", folder_path)
+                    self.copy_file_to_folder(self.res_map_path + "\\CCMesh_Base_1004_TEX_ROUGH.jpg", folder_path)
+
+                    
+                    self.create_texture_node(bsdf, node_tree, folder_path + "\\CCMesh_Base_1001_TEX_THICK.png", "Non-Color", 'Color', "Subsurface")
+                    #self.create_texture_node(bsdf, node_tree, self.res_map_path + "\\CCMesh_Base_1001_TEX_TRANSWEIGHT.png", 'Color', "Subsurface Radius")
+                    self.create_texture_node(bsdf, node_tree, folder_path + "\\CCMesh_Base_1001_TEX_ROUGH.jpg", "Non-Color", 'Color', "Roughness")
+                    
+                    links5 = node_tree.links
+                    links5.new(diffuse_texture_node.outputs['Color'], bsdf.inputs['Subsurface Color'])
+                    
+                    bsdf.inputs["Subsurface Radius"].default_value = (0.02, 0.01, 0.007)
+                
+                if (mesh_name == "CCBaseEye"):
+                    bsdf.inputs["Roughness"].default_value = 0
                 
             #normal
             if (len(normal_texture_set) > 0):
